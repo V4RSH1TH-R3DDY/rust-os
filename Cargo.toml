@@ -12,6 +12,11 @@ authors = ["V4RSH1TH"]
 description = "A simple operating system written in Rust."
 license = "GPL-3.0"
 
+[[bin]]
+name = "rust-os"
+test = false
+bench = false
+
 [dependencies]
 
 
