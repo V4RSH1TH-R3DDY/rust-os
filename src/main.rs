@@ -3,7 +3,6 @@
 #![no_main] // disable all Rust-level entry points
 
 use core::panic::PanicInfo;
-use core::fmt::Write;
 
 // this function is called on panic
 #[panic_handler]
