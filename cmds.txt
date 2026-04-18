@@ -1,8 +1,0 @@
-qemu-system-x86_64 \
-  -drive format=raw,file=target/x86_64_rust_os/debug/bootimage-rust_os.bin
-
-
-qemu-system-x86_64 \
-  -drive format=raw,file=target/x86_64_rust_os/debug/bootimage-rust_os.bin \
-  -serial stdio \
-  -device isa-debug-exit,iobase=0xf4,iosize=0x04

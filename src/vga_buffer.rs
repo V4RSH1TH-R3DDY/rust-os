@@ -62,16 +62,6 @@ pub struct Writer {
 //implementaion of the writer struct that will write to the buffer
 
 impl Writer {
-    
-    pub fn write_string(&mut self, s: &str) {
-    for byte in s.bytes() {
-        match byte {
-                0x20..=0x7e | b'\n' => self.write_byte(byte),
-                _ => self.write_byte(0xfe), // unknown char
-            }
-        }
-    }
-
     pub fn write_byte(&mut self, byte: u8) {
         match byte {
             b'\n' => self.new_line(),
@@ -92,26 +82,20 @@ impl Writer {
             }
         }
     }
-
-    fn new_line(&mut self) {
-        for row in 1..BUFFER_HEIGHT {
-            for col in 0..BUFFER_WIDTH {
-                let character = self.buffer.chars[row][col];
-                self.buffer.chars[row - 1][col] = character;
+    
+    pub fn write_string(&mut self, s: &str) {
+        for byte in s.bytes() {
+            match byte {
+                0x20..=0x7e | b'\n' => self.write_byte(byte),
+                _ => self.write_byte(0xfe),
             }
-       }
-        self.clear_row(BUFFER_HEIGHT - 1);
-        self.column_position = 0;
+        }
     }
 
-    fn clear_row(&mut self, row: usize) {
-        let blank = ScreenChar {
-            ascii_character: b' ',
-            color_code: self.color_code,
-        };
-        for col in 0..BUFFER_WIDTH {
-            self.buffer.chars[row][col] = blank;
-        }
+
+
+    fn new_line(&mut self) {
+        todo!()
     }
 }
 
@@ -126,3 +110,4 @@ pub fn print_something() {
     writer.write_string("ello ");
     writer.write_string("Wörld!");
 }
+
