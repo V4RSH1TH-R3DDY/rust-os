@@ -2,6 +2,7 @@
 // screen in the kernel.
 use volatile::Volatile;
 use core::fmt::Write;
+use spin::Mutex;
 
 #[allow(dead_code)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -127,4 +128,14 @@ pub fn print_something() {
     writer.write_byte(b'H');
     writer.write_string("ello! ");
     write!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
+}
+
+use lazy_static::lazy_static;
+
+lazy_static! {
+    pub static ref WRITER: Mutex<Writer> = Mutex::new(Writer {
+        column_position: 0,
+        color_code: ColorCode::new(Color::Yellow, Color::Black),
+        buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
+    });
 }
